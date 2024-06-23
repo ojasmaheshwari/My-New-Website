@@ -1,0 +1,36 @@
+.blogscollection-main {
+    width: 90%;
+    min-height: calc(100svh - 4rem);
+    margin: auto;
+    padding: 3rem;
+}
+
+.blogcards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.blogscollection-main>h1 {
+    line-height: 2;
+}
+
+.blogscollection-main>span {
+    margin-bottom: 2rem;
+}
+
+.blogcards {
+    margin: 2.5rem 0 0 0;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .blogcards {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .blogscollection-main {
+        width: 100%;
+    }
+}

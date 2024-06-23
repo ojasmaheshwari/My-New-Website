@@ -1,0 +1,12 @@
+{
+    "heading": "My First Blog",
+    "description": "This is my first blog on this website",
+    "profilePicture": "https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg",
+    "username": "Ojas Maheshwari",
+    "speciality": "Technology",
+    "timeReqToRead": "6",
+    "publishDate": "null",
+    "blogMarkdownContent": "# My First Blog\n## I AM EXCITED!!",
+    "likes": 1500,
+    "comments": 30
+}
