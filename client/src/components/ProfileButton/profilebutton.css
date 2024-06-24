@@ -1,0 +1,36 @@
+.profile-btn>img {
+    width: calc(2.5rem + 2px);
+    height: calc(2.5rem + 2px);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    position: fixed;
+    right: 2rem;
+    background-color: #FFFFFF;
+    color: var(--col-main-text);
+    padding: .5rem 0 .5rem 0;
+    border-radius: .5rem;
+    box-shadow: 0 3px 10px var(--col-main-text);
+}
+
+.profile-dropdown ul {
+    width: 100%;
+}
+
+.profile-dropdown ul li {
+    padding: .5rem 1rem .5rem 1rem;
+    list-style: none;
+    width: 100%;
+    transition: .25s ease;
+}
+
+.profile-dropdown ul li:hover {
+    background-color: rgba(0, 0, 0, .15);
+}
+
+.profile-dropdown a {
+    text-decoration: none;
+    color: var(--col-main-text);
+}

@@ -4,10 +4,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
 const blogRouter = require('./routes/blogs');
+const getProfileRouter = require('./routes/getprofile');
 
 const MONGODB_SERVER = process.env.MONGODB_SERVER;
 const DB_NAME = process.env.DB_NAME;
@@ -24,12 +26,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 
 app.listen(PORT);
 
 app.use('/blog', blogRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/getprofile', getProfileRouter);
 
 mongoose.connect(MONGODB_SERVER + DB_NAME)
     .then(() => console.log("MongoDB connected!"))

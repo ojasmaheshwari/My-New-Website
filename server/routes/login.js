@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     res.cookie('jwt', token, {  // HTTP-Only Cookie
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: 'Strict',
+        sameSite: 'None',
         maxAge: 3600000,
     });
     console.log(process.env.NODE_ENV === "production");

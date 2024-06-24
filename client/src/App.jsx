@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navbar/navbar'
 import Home from './components/Home/home'
 import SignUp from './components/SignUp/signup'
@@ -8,8 +8,11 @@ import NotFoundPage from './components/404Page/404page'
 import BlogsCollection from './components/BlogsCollection/blogscollection'
 import Blog from './components/Blog/blog'
 import './app.css'
+import axios from 'axios'
 
 import { createBrowserRouter, RouterProvider, Outlet, Route } from 'react-router-dom'
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Layout = () => {
   return (
@@ -65,6 +68,27 @@ const colorThemeChanger = (colors) => {
 
 const App = () => {
   // colorThemeChanger(["#606c38", "#283618", "#fefae0", "#dda15e", "#bc6c25"]);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`${SERVER_URL}/getprofile`, {
+          withCredentials: true
+        });
+        if (response.data.profileFound) {
+          console.log("Found profile");
+          console.log(response.data.username);
+        }
+        else {
+          console.log("Need to show log in button in navbar");
+        }
+      }
+      catch (error) {
+        console.log("Error", error);
+      }
+    }
+
+    fetchProfile();
+  }, []);
 
   return (
     <>
