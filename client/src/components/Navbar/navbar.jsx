@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './navbar.css'
 import burger from '../../assets/svg/burger.svg'
 import { Link } from 'react-router-dom'

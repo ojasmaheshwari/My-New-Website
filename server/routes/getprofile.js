@@ -1,41 +1,42 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const User = require('../models/User');
+const User = require("../models/User");
 
 const ACCESS_SECRET_TOKEN = process.env.ACCESS_SECRET_TOKEN;
 
 const authenticateJWT = (req, res, next) => {
-    const token = req.cookies?.jwt;
+  const token = req.cookies?.jwt;
 
-    if (!token) {
-        return res.json({
-            profileFound: false,
-        });
-    }
+  if (!token) {
+    return res.json({
+      profileFound: false,
+    });
+  }
 
-    try {
-        const decoded = jwt.verify(token, ACCESS_SECRET_TOKEN);
-        req.user_id = decoded.id;
-        next();
-    }
-    catch (error) {
-        console.log(error);
-    }
-
+  try {
+    const decoded = jwt.verify(token, ACCESS_SECRET_TOKEN);
+    console.log(decoded);
+    req.user_id = decoded.id;
+    next();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-router.get('/', authenticateJWT, async (req, res) => {
-    if (req.user_id) {
-        const user = await User.findById(req.user_id);
-        res.json({
-            profileFound: true,
-            username: user.username,
-        });
-    }
+router.get("/", authenticateJWT, async (req, res) => {
+  if (req.user_id) {
+    const user = await User.findById(req.user_id);
+    res.json({
+      profileFound: true,
+			profile: {
+				username: user.username,
+			},
+    });
+  }
 });
 
 module.exports = router;
