@@ -4,11 +4,13 @@ import { ProfileContext } from "../../services/ProfileContext";
 import axios from "axios";
 import PopUp from "../PopUp/popup";
 import { PopUpContext } from "../PopUp/popupcontext";
+import { Link } from "react-router-dom";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const ProfileButton = () => {
-  const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] = useContext(PopUpContext);
+  const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] =
+    useContext(PopUpContext);
   const [isDropdownShown, setIsDropdownShown] = useState(false);
   const [profile, setProfile] = useContext(ProfileContext);
 
@@ -19,15 +21,15 @@ const ProfileButton = () => {
       });
 
       const message = response.data.message;
-			console.log(response.data);
+      console.log(response.data);
       setPopUpData({
         heading: "SUCCESS",
         description: message,
       });
       setIsPopUpShown(true);
 
-			// setProfile to {}
-			setProfile({});
+      // setProfile to {}
+      setProfile({});
     } catch (error) {
       const errorMessage = error.response.data.message;
       setPopUpData({
@@ -39,22 +41,26 @@ const ProfileButton = () => {
     }
   };
 
-
   const toggleDropdown = () => setIsDropdownShown(!isDropdownShown);
 
   return (
     <div className="profile-container">
       <PopUp />
-      <div className="profile-btn" onClick={toggleDropdown}>
-        <img
-          src={profile?.profilePicUrl}
-          alt="profile"
-          style={{
-            border: isDropdownShown
-              ? "2px solid var(--col-bg)"
-              : "2px solid transparent",
-          }}
-        />
+      <div className="profile-btn">
+        {profile?.username ? (
+          <img
+            src={profile?.profilePicUrl}
+            alt="profile"
+            style={{
+              border: isDropdownShown
+                ? "2px solid var(--col-bg)"
+                : "2px solid transparent",
+            }}
+            onClick={toggleDropdown}
+          />
+        ) : (
+          <Link className="profile-login-btn" to="/login">Log In</Link>
+        )}
       </div>
       <div
         className="profile-dropdown"

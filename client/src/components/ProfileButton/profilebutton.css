@@ -50,3 +50,19 @@
     text-decoration: none;
     color: var(--col-main-text);
 }
+
+.profile-login-btn {
+	padding: .5rem 1rem .5rem 1rem;
+	background-color: transparent;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+	font-weight: bold;
+	transition: .5s ease;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.profile-login-btn:hover {
+	background-color: #FFFFFF;
+	color: var(--col-primary);
+}
