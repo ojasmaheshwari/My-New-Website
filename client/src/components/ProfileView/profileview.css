@@ -1,0 +1,66 @@
+.profileview-main {
+	position: absolute;
+	width: 60%;
+	height: 50%;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	gap: 3rem;
+	padding: 3rem;
+  box-shadow: 0 3px 10px var(--col-main-text);
+	border-radius: 5px;
+}
+
+.profileview-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.profileview-profilepic {
+	width: 10rem;
+	height: 10rem;
+	border-radius: 50%;
+	border: 2px solid var(--col-primary);
+}
+
+.profileview-right {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.profileview-right-up {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	flex-grow: 1;
+}
+
+.profileview-right-bottom {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.profileview-user-heading {
+	color: var(--col-main-text);
+	font-size: larger;
+}
+
+.profileview-follow-btn {
+	padding: .5rem 1.5rem .5rem 1.5rem;
+	background-color: var(--col-primary);
+	color: #FFFFFF;
+	border: none;
+	font-weight: bold;
+	transition: .5s ease;
+}
+
+.profileview-follow-btn:hover {
+	filter: brightness(1.25);
+}

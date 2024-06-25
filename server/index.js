@@ -11,6 +11,7 @@ const loginRouter = require('./routes/login');
 const blogRouter = require('./routes/blogs');
 const getProfileRouter = require('./routes/getprofile');
 const logoutRouter = require('./routes/logout');
+const profileRouter = require('./routes/profile');
 
 const MONGODB_SERVER = process.env.MONGODB_SERVER;
 const DB_NAME = process.env.DB_NAME;
@@ -37,6 +38,7 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/getprofile', getProfileRouter);
 app.use('/logout', logoutRouter);
+app.use('/profile', profileRouter);
 
 mongoose.connect(MONGODB_SERVER + DB_NAME)
     .then(() => console.log("MongoDB connected!"))

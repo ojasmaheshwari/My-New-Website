@@ -69,11 +69,11 @@ const ProfileButton = () => {
         }}
       >
         <ul>
-          <a href="#" onClick={toggleDropdown}>
+          <Link to={`/profile/${profile?.username}`} onClick={toggleDropdown}>
             <li className="profile-username">
               {profile?.username ? `@${profile?.username}` : "login"}
             </li>
-          </a>
+          </Link>
           <a href="#" onClick={toggleDropdown}>
             <li>Another action</li>
           </a>
