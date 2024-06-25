@@ -1,35 +1,37 @@
-import React from 'react'
-import { RxCross2 } from "react-icons/rx"
-import './popup.css'
+import React, { useContext, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import "./popup.css";
+import { PopUpContext } from "./popupcontext";
 
-const PopUp = ({ heading, description, show, onClose }) => {
+const PopUp = () => {
+	const [popUpData, setPopUpData, popUpShown, setIsPopUpShown] = useContext(PopUpContext);
 
-    if (!show) {
-        return null;
-    }
+	const togglePopUp = () => setIsPopUpShown(!popUpShown);
 
-    return (
-        <div className='overlay-full'>
-            <div className='popup-container'>
-                <div className='popup-tab'>
-                    <RxCross2 className='popup-cross-icon' onClick={onClose} />
-                </div>
-                <div className='popup-heading'>
-                    <h3>{heading}</h3>
-                </div>
-                <div className='popup-description'>
-                    <span>
-                        {description}
-                    </span>
-                </div>
-                <div className='popup-actions'>
-                    <button className='popup-button-ok' onClick={onClose}>
-                        OK
-                    </button>
-                </div>
-            </div>
+  if (!popUpShown) {
+    return null;
+  }
+
+  return (
+    <div className="overlay-full">
+      <div className="popup-container">
+        <div className="popup-tab">
+          <RxCross2 className="popup-cross-icon" onClick={togglePopUp} />
         </div>
-    )
-}
+        <div className="popup-heading">
+          <h3>{popUpData.heading}</h3>
+        </div>
+        <div className="popup-description">
+          <span>{popUpData.description}</span>
+        </div>
+        <div className="popup-actions">
+          <button className="popup-button-ok" onClick={togglePopUp}>
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default PopUp
+export default PopUp;

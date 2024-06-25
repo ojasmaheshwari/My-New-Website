@@ -18,10 +18,20 @@ const authenticateJWT = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, ACCESS_SECRET_TOKEN);
-    console.log(decoded);
-    req.user_id = decoded.id;
-    next();
+    jwt.verify(token, ACCESS_SECRET_TOKEN, (err, decoded) => {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          return res.status(401).json({ message: "Token has expired" });
+        } else {
+          return res
+            .status(401)
+            .json({ message: "Failed to authenticate token" });
+        }
+      }
+      console.log(decoded);
+      req.user_id = decoded.id;
+      next();
+    });
   } catch (error) {
     console.log(error);
   }
@@ -32,9 +42,10 @@ router.get("/", authenticateJWT, async (req, res) => {
     const user = await User.findById(req.user_id);
     res.json({
       profileFound: true,
-			profile: {
-				username: user.username,
-			},
+      profile: {
+        username: user.username,
+				profilePicUrl: user.profilePicUrl
+      },
     });
   }
 });

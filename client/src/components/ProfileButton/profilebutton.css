@@ -26,9 +26,25 @@
     transition: .25s ease;
 }
 
-.profile-dropdown ul li:hover {
+.profile-dropdown ul li:not(.profile-username, .profile-logout):hover {
     background-color: rgba(0, 0, 0, .15);
 }
+
+.profile-username {
+	text-decoration: underline;
+	color: var(--col-primary);
+}
+
+.profile-logout {
+	color: magenta;
+	font-weight: bold;
+}
+
+.profile-logout:hover {
+	background-color: magenta;
+	color: #FFFFFF;
+}
+
 
 .profile-dropdown a {
     text-decoration: none;

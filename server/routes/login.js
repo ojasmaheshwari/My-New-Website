@@ -9,30 +9,30 @@ const jwt = require('jsonwebtoken');
 const ACCESS_SECRET_TOKEN = process.env.ACCESS_SECRET_TOKEN;
 
 router.post('/', async (req, res) => {
-    const { username, password } = req.body;
+	const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
-    if (!user) {
-        return res.status(400).json({ message: "User doesn't exist" });
-    }
+	const user = await User.findOne({ username });
+	if (!user) {
+		return res.status(400).json({ message: "User doesn't exist" });
+	}
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        return res.status(400).json({ message: "Invalid user credentials" });
-    }
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (!isMatch) {
+		return res.status(400).json({ message: "Invalid user credentials" });
+	}
 
-    const token = jwt.sign({ id: user._id }, ACCESS_SECRET_TOKEN, { expiresIn: '1h' });
+	const token = jwt.sign({ id: user._id }, ACCESS_SECRET_TOKEN, { expiresIn: '1d' });
 
-    res.cookie('jwt', token, {  // HTTP-Only Cookie
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: 'Strict',
-        maxAge: 3600000,
-    });
-    console.log(process.env.NODE_ENV === "production");
-    console.log(process.env.NODE_ENV);
+	res.cookie('jwt', token, {  // HTTP-Only Cookie
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: 'Strict',
+		expiresIn: "1d",
+	});
+	console.log(process.env.NODE_ENV === "production");
+	console.log(process.env.NODE_ENV);
 
-    res.json({ message: "Logged in successfully!" });
+	res.json({ message: "Logged in successfully!" });
 });
 
 module.exports = router;

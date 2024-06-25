@@ -5,15 +5,14 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
 import PopUp from '../PopUp/popup'
+import { PopUpContext } from '../PopUp/popupcontext'
 import { ProfileContext } from '../../services/ProfileContext'
 import fetchProfile from '../../services/fetchprofile'
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Login = () => {
-	const [isPopUpShown, setIsPopUpShown] = useState(false);
-	const [popUpHeading, setPopUpHeading] = useState("Hey there");
-	const [popUpDescription, setPopUpDescription] = useState("Some error occured, please try again.");
+	const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] = useContext(PopUpContext);
 	const [profile, setProfile] = useContext(ProfileContext);
 
 	const submitToAPI = async (formData) => {
@@ -25,8 +24,12 @@ const Login = () => {
 				withCredentials: true,
 			});
 
-			setPopUpHeading("SUCCESS");
-			setPopUpDescription(response.data.message);
+			const message = response.data.message;
+
+			setPopUpData({
+				heading: "SUCCESS",
+				description: message,
+			});
 			setIsPopUpShown(true);
 
 			// Fetch profile and set it
@@ -37,10 +40,11 @@ const Login = () => {
 		}
 		catch (error) {
 			const errorMessage = error.response?.data.message || "Some error occured, please try again.";
-			setPopUpHeading("OOPS!");
-			setPopUpDescription(errorMessage);
+			setPopUpData({
+				heading: "ERROR",
+				description: errorMessage,
+			});
 			setIsPopUpShown(true);
-			console.log(error);
 		}
 	}
 
@@ -63,14 +67,7 @@ const Login = () => {
 
 	return (
 		<main className='signup-main'>
-		<PopUp
-		heading={popUpHeading}
-		description={popUpDescription}
-		show={isPopUpShown}
-		onClose={
-			() => { setIsPopUpShown(false) }
-		}
-		/>
+		<PopUp/>
 		<div className="container">
 		<div className="signup-header">
 		<h1>Log In</h1>

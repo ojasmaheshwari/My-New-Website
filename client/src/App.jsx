@@ -7,6 +7,7 @@ import NotFoundPage from "./components/404Page/404page";
 // import Footer from './components/Footer/footer'
 import BlogsCollection from "./components/BlogsCollection/blogscollection";
 import Blog from "./components/Blog/blog";
+import ProfileView from "./components/ProfileView/profileview";
 import "./app.css";
 
 import {
@@ -66,6 +67,10 @@ const App = () => {
 				{
 					path: "*",
 					element: <NotFoundPage />,
+				},
+				{
+					path: "/profile/:username",
+					element: <ProfileView />,
 				},
 			],
 		},
