@@ -21,8 +21,8 @@ const Navbar = () => {
                     <Link to="/" className="active">
                         <li>Home</li>
                     </Link>
-                    <Link to="/about">
-                        <li>About</li>
+                    <Link to="/create">
+                        <li>Create</li>
                     </Link>
                     <Link to="/blogs">
                         <li>Blogs</li>
@@ -33,7 +33,7 @@ const Navbar = () => {
                 </ul>
                 <div className='nav-right'>
                     <input type="text" name="search" placeholder="Search" />
-                    <ProfileButton />
+                    <ProfileButton className="navbar-profile-elem"/>
                 </div>
                 <button id="hamburger-button" onClick={toggleMenu}>
                     <img src={burger} />
@@ -44,8 +44,8 @@ const Navbar = () => {
                     <Link to="/" onClick={toggleMenu}>
                         <li>Home</li>
                     </Link>
-                    <Link to="/about" onClick={toggleMenu}>
-                        <li>About</li>
+                    <Link to="/create" onClick={toggleMenu}>
+                        <li>Create</li>
                     </Link>
                     <Link to="/blogs" onClick={toggleMenu}>
                         <li>Blogs</li>

@@ -5,6 +5,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const path = require('path');
+const rateLimit = require('express-rate-limit');
 
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
@@ -12,6 +14,14 @@ const blogRouter = require('./routes/blogs');
 const getProfileRouter = require('./routes/getprofile');
 const logoutRouter = require('./routes/logout');
 const profileRouter = require('./routes/profile');
+const updateProfileRouter = require('./routes/updateprofile');
+const updatePfpThroughUploadRouter = require('./routes/updatepfpthroughupload');
+const uploadBlogRouter = require('./routes/uploadblog');
+const getUserBlogsRouter = require('./routes/getuserblogs');
+const likeBlogRouter = require('./routes/likeblog');
+const postCommentRouter = require('./routes/postcomment');
+const getCommentsRouter = require('./routes/getcomments');
+const getBlogsInDescOrderRouter = require('./routes/getblogsindescorder');
 
 const MONGODB_SERVER = process.env.MONGODB_SERVER;
 const DB_NAME = process.env.DB_NAME;
@@ -20,16 +30,30 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 
+const allowedOrigins = [process.env.CLIENT_URL, process.env.CLIENT_SEC_URL]
+
 const corsOptions = {
-    origin: process.env.CLIENT_URL,
-    credentials: true,
+	origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+	credentials: true,
 }
+
+const generalLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Each IP can send a max of 100 req in 15 min
+});
+
+app.use(generalLimiter);
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options
 app.use(bodyParser.json());
 app.use(cookieParser());
-
 
 app.listen(PORT);
 
@@ -39,6 +63,17 @@ app.use('/login', loginRouter);
 app.use('/getprofile', getProfileRouter);
 app.use('/logout', logoutRouter);
 app.use('/profile', profileRouter);
+app.use('/updateprofile', updateProfileRouter);
+app.use('/updatepfpthroughupload', updatePfpThroughUploadRouter);
+app.use('/uploadblog', uploadBlogRouter);
+app.use('/getuserblogs', getUserBlogsRouter);
+app.use('/likeblog', likeBlogRouter);
+app.use('/postcomment', postCommentRouter);
+app.use('/getcomments', getCommentsRouter);
+app.use('/getblogsindescorder', getBlogsInDescOrderRouter);
+
+// Serve files statically from uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect(MONGODB_SERVER + DB_NAME)
     .then(() => console.log("MongoDB connected!"))

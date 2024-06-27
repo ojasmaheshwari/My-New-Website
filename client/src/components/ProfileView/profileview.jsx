@@ -6,6 +6,8 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import "./profileview.css";
 import PopUp from "../PopUp/popup";
 import { PopUpContext } from "../PopUp/popupcontext";
+import DOMPurify from "dompurify";
+import FileUploadPrompt from "../FileUploadPrompt/fileuploadprompt";
 import axios from "axios";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -13,83 +15,158 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ProfileView = () => {
   const params = useParams();
   const [profile, setProfile] = useContext(ProfileContext);
-	const [requestedProfile, setRequestedProfile] = useState({});
-	const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] = useContext(PopUpContext);
+  const [requestedProfile, setRequestedProfile] = useState({});
+  const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] =
+    useContext(PopUpContext);
+  const navigate = useNavigate();
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
 
   const isProfileEditable = () => params.username === profile?.username;
 
-	const fetchRequestedProfile = async() => {
-		const requiredUsername = params.username;
-		if (!requiredUsername) {
-			setPopUpData({
-				heading: "ERROR",
-				description: "Username searched for is invalid or is empty",
-			});
-			setIsPopUpShown(true);
+  const fetchRequestedProfile = async () => {
+    const requiredUsername = params.username;
+    if (!requiredUsername) {
+      setPopUpData({
+        heading: "ERROR",
+        description: "Username searched for is invalid or is empty",
+      });
+      setIsPopUpShown(true);
 
-			useNavigate('/');
-			return;
-		}
-		try {
-		const response = await axios.get(`${SERVER_URL}/profile/${requiredUsername}`);
-		console.log(response.data);
-		setRequestedProfile(response.data.profile);
-		}
-		catch(error) {
-			setPopUpData({
-				heading: "ERROR",
-				description: error.response?.data?.message,
-			})
-		}
+      navigate("/");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${SERVER_URL}/profile/${requiredUsername}`,
+      );
+      console.log(response.data);
+      setRequestedProfile(response.data.profile);
+    } catch (error) {
+      setPopUpData({
+        heading: "ERROR",
+        description: error.response?.data?.message,
+      });
+      setIsPopUpShown(true);
+      navigate("/");
+    }
+  };
 
-	};
+  const editUsername = () => {
+    const usernameElem = document.getElementById("profileview-username");
+    const submitElem = document.querySelector(".profileview-submit-btn");
+    submitElem.style.display = "block";
+    usernameElem.contentEditable = true;
+    usernameElem.focus();
+  };
 
-	useEffect(() => {
-		fetchRequestedProfile();
-	}, []);
+  const editAbout = () => {
+    const aboutElem = document.getElementById("profileview-about");
+    const submitElem = document.querySelector(".profileview-submit-btn");
+    submitElem.style.display = "block";
+    aboutElem.contentEditable = true;
+    aboutElem.focus();
+  };
+
+  const changeProfilePic = async () => {
+    setIsPromptOpen(true);
+  };
+
+  const submit = async (e) => {
+    const submitElem = e.target;
+    const usernameElem = document.getElementById("profileview-username");
+    const aboutElem = document.getElementById("profileview-about");
+    const newFullname = usernameElem.innerText;
+    const newAbout = aboutElem.innerText;
+    usernameElem.contentEditable = false;
+    aboutElem.contentEditable = false;
+    submitElem.style.display = "none";
+    // Send req to server
+
+    const response = await axios.put(
+      `${SERVER_URL}/updateprofile`,
+      {
+        username: profile?.username,
+        fullName: newFullname,
+        about: newAbout,
+      },
+      {
+        withCredentials: true,
+      },
+    );
+
+    if (response.status === 200) {
+      console.log("Profile updated successfully", response.data);
+    } else {
+      setPopUpData({
+        heading: "ERROR",
+        description: response.data?.message,
+      });
+      setIsPopUpShown(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequestedProfile();
+  }, []);
 
   return (
-    <div className="profileview-main">
-		<PopUp />
-      <div className="profileview-left">
-        <img
-          src={requestedProfile?.profilePicUrl}
-          alt="profile pic"
-          className="profileview-profilepic"
-        />
-        <div className="profileview-left-bottom">
-          <span>@{requestedProfile?.username}</span>
-        </div>
-      </div>
-      <div className="profileview-right">
-        <div className="profileview-right-up">
-          <div className="profileview-user-heading">
-            <span>Some description about the user</span>
-            <HiOutlinePencilAlt
-              style={{
-								marginLeft: ".5rem",
-                display: isProfileEditable() ? "inline-block" : "none",
-              }}
+    <div className="profileview-centralizer">
+      <FileUploadPrompt
+        isPromptOpen={isPromptOpen}
+        setIsPromptOpen={setIsPromptOpen}
+        setRequestedProfile={setRequestedProfile}
+      />
+      <div className="profileview-main">
+        <PopUp />
+        <div className="profileview-left">
+          <div
+            className={`profileview-profilepic ${isProfileEditable() ? "imageEditable" : ""}`}
+          >
+            <img
+              src={requestedProfile?.profilePicUrl}
+              alt="profile pic"
+              onClick={isProfileEditable() ? changeProfilePic : ""}
             />
+            <div className="profileview-img-overlay">CHANGE</div>
           </div>
+          <div className="profileview-left-bottom">
+            <span>@{requestedProfile?.username}</span>
+          </div>
+        </div>
+        <div className="profileview-right">
+          <div className="profileview-right-up">
+            <div className="profileview-user-heading">
+              <span id="profileview-username" spellCheck="false">
+                {requestedProfile?.fullName}
+              </span>
+              <HiOutlinePencilAlt
+                style={{
+                  marginLeft: ".5rem",
+                  display: isProfileEditable() ? "inline-block" : "none",
+                }}
+                onClick={editUsername}
+              />
+            </div>
 
-          <div className="profileview-user-about">
-            <span>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure,
-              quas placeat explicabo cupiditate sapiente quibusdam nam dolor
-              magnam itaque mollitia, praesentium soluta, deserunt maiores
-              inventore molestias sint suscipit dicta neque!
-            </span>
-            <HiOutlinePencilAlt
-              style={{
-								marginLeft: ".5rem",
-                display: isProfileEditable() ? "inline-block" : "none",
-              }}
-            />
+            <div className="profileview-user-about">
+              <span id="profileview-about" spellCheck="false">
+                {requestedProfile?.about}
+              </span>
+              <HiOutlinePencilAlt
+                style={{
+                  marginLeft: ".5rem",
+                  display: isProfileEditable() ? "inline-block" : "none",
+                }}
+                onClick={editAbout}
+              />
+            </div>
           </div>
-        </div>
-        <div className="profileview-right-bottom">
-          <button className="profileview-follow-btn">Follow</button>
+          <div className="profileview-right-bottom">
+            <button className="profileview-follow-btn">Follow</button>
+            <button className="profileview-submit-btn" onClick={submit}>
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </div>

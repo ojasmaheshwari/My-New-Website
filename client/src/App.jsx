@@ -8,6 +8,8 @@ import NotFoundPage from "./components/404Page/404page";
 import BlogsCollection from "./components/BlogsCollection/blogscollection";
 import Blog from "./components/Blog/blog";
 import ProfileView from "./components/ProfileView/profileview";
+import BlogMaker from "./components/BlogMaker/blogmaker";
+import BlogPage from "./components/BlogPage/blogpage";
 import "./app.css";
 
 import {
@@ -16,6 +18,7 @@ import {
 	Outlet,
 	Route,
 } from "react-router-dom";
+import BlogsBy from "./components/BlogsBy/blogsby";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -58,7 +61,7 @@ const App = () => {
 				},
 				{
 					path: "/blogs",
-					element: <BlogsCollection />,
+					element: <BlogPage />,
 				},
 				{
 					path: "/blogs/:blog",
@@ -72,6 +75,14 @@ const App = () => {
 					path: "/profile/:username",
 					element: <ProfileView />,
 				},
+				{
+					path: "/create",
+					element: <BlogMaker />,
+				},
+				{
+					path: "/blogsby/:username",
+					element: <BlogsBy />
+				}
 			],
 		},
 	]);

@@ -12,7 +12,7 @@ const authenticateJWT = (req, res, next) => {
   const token = req.cookies?.jwt;
 
   if (!token) {
-    return res.json({
+    return res.status(404).json({
       profileFound: false,
     });
   }
@@ -28,7 +28,6 @@ const authenticateJWT = (req, res, next) => {
             .json({ message: "Failed to authenticate token" });
         }
       }
-      console.log(decoded);
       req.user_id = decoded.id;
       next();
     });
@@ -40,14 +39,22 @@ const authenticateJWT = (req, res, next) => {
 router.get("/", authenticateJWT, async (req, res) => {
   if (req.user_id) {
     const user = await User.findById(req.user_id);
+    if (!user) {
+      return res.json({
+        profileFound: false,
+      });
+    }
     res.json({
       profileFound: true,
       profile: {
         username: user.username,
-				profilePicUrl: user.profilePicUrl
+        profilePicUrl: user.profilePicUrl,
+        fullName: user.fullName,
+        about: user.about,
       },
     });
   }
 });
 
 module.exports = router;
+module.exports.authenticateJWT = authenticateJWT;

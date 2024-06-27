@@ -7,13 +7,14 @@ router.get('/:username', async (req, res) => {
 	const requestedUsername = req.params.username;
 	if (requestedUsername) {
 		const requestedUser = await User.findOne({username: requestedUsername});
-		console.log(requestedUser);
 		if (requestedUser) {
 			return res.json({
 				profileFound: true,
 				profile: {
 					username: requestedUser.username,
 					profilePicUrl: requestedUser.profilePicUrl,
+					fullName: requestedUser.fullName,
+					about: requestedUser.about,
 				}
 			});
 		}

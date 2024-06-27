@@ -1,9 +1,9 @@
 
-POST http://192.168.1.6:8000/login
+PUT http://localhost:8000/updateprofile
 Content-Type: application/json
 
 {
-    "username": "zeus",
-    "password": "god"
+    "username": "ojas",
+    "fullName": "hacked"
 }
 

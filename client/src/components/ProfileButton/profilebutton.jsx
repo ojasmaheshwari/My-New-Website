@@ -74,9 +74,9 @@ const ProfileButton = () => {
               {profile?.username ? `@${profile?.username}` : "login"}
             </li>
           </Link>
-          <a href="#" onClick={toggleDropdown}>
-            <li>Another action</li>
-          </a>
+          <Link to={`/blogsby/${profile?.username}`} onClick={toggleDropdown}>
+            <li>Your blogs</li>
+          </Link>
           <a href="#" onClick={toggleDropdown}>
             <li className="profile-logout" onClick={logout}>
               Log out

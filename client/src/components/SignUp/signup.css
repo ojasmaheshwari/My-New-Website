@@ -27,7 +27,7 @@
     line-height: 2rem;
 }
 
-form {
+.signup-main form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,7 +36,7 @@ form {
     width: 100%;
 }
 
-form input {
+.signup-main form input {
     outline: none;
     width: 50%;
     padding: .5rem 1rem .5rem 0;
@@ -45,11 +45,11 @@ form input {
     background-color: var(--col-bg);
 }
 
-form input:focus {
+.signup-main form input:focus {
     border-color: blue;
 }
 
-form button {
+.signup-main form button {
     width: 30%;
     height: 2.5rem;
     border: none;
@@ -60,7 +60,7 @@ form button {
     cursor: pointer;
 }
 
-form button:hover {
+.signup-main form button:hover {
     filter: brightness(1.2);
 }
 

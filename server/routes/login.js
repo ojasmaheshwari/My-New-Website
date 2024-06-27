@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const ACCESS_SECRET_TOKEN = process.env.ACCESS_SECRET_TOKEN;
 
 router.post('/', async (req, res) => {
+	console.log('login req');
 	const { username, password } = req.body;
 
 	const user = await User.findOne({ username });

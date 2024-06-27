@@ -1,42 +1,17 @@
-const fs = require('fs');
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const Blog = require('../models/Blog');
 
-const blogParentDirectory = "./res/blogs";
+router.get("/:blogId", async (req, res) => {
+  const blogId = req.params.blogId;
 
-const blogExists = (blogName) => {
-    const blogPath = blogParentDirectory + "/" + blogName + ".json";
-    console.log(blogPath);
-    if (fs.existsSync(blogPath))
-        return true;
-    else
-        return false;
-}
-
-const getBlog = (blogName) => {
-    try {
-        const blogPath = blogParentDirectory + "/" + blogName + ".json";
-        const data = fs.readFileSync(blogPath, 'utf-8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error('Error reading file:', err);
-        return null;
-    }
-}
-
-router.get("/:blogName", (req, res) => {
-    let blogName = req.params.blogName;
-
-    if (blogExists(blogName)) {
-        let blog;
-        if (blog = getBlog(blogName)) {
-            res.send(blog);
-        } else {
-            res.status(500).send("Something went wrong");
-        }
-    } else {
-        res.status(404).send("Blog doesn't exist");
-    }
-})
+	try {
+		const blog = await Blog.findById(blogId);
+		res.status(200).json(blog);
+	}
+	catch(error) {
+		res.status(500).json({message: "This blog doesn't exist."});
+	}
+});
 
 module.exports = router;
