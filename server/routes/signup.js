@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
     user.save()
         .then(() => res.status(201).json({ message: "Sign Up Successful" }))
         .catch(err => {
+						console.log(err);
             if (err.code === 11000) { // Duplicate error
                 res.status(400).json({ message: "Username or email already exists!" })
             } else {
