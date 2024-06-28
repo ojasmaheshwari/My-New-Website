@@ -31,7 +31,8 @@ const MONGODB_CONNECT_STR = process.env.MONGODB_CONNECT_STR;
 const app = express();
 
 const corsOptions = {
-	origin: process.env.CLIENT_URL,
+	origin: [process.env.CLIENT_URL],
+	methods: ["POST", "GET", "PUT"],
 	credentials: true,
 }
 
