@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -30,13 +30,13 @@ const MONGODB_CONNECT_STR = process.env.MONGODB_CONNECT_STR;
 
 const app = express();
 
-const corsOptions = {
-	origin: [process.env.CLIENT_URL],
-	methods: ["POST", "GET", "PUT", "OPTIONS"],
-	credentials: true,
-}
+// const corsOptions = {
+// 	origin: [process.env.CLIENT_URL],
+// 	methods: ["POST", "GET", "PUT", "OPTIONS"],
+// 	credentials: true,
+// }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // const generalLimiter = rateLimit({
 // 	windowMs: 15 * 60 * 1000, // 15 minutes
@@ -46,9 +46,21 @@ app.use(cors(corsOptions));
 
 //app.use(generalLimiter);
 
-app.options('*', cors(corsOptions));    // Pre-flight options
-// app.use(bodyParser.json());
-// app.use(cookieParser());
+// app.options('*', cors(corsOptions));    // Pre-flight options
+
+// CORS middleware
+const allowCrossDomain = (req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `ojasmaheshwari.github.io`);
+  res.header(`Access-Control-Allow-Methods`, `GET,PUT,POST,DELETE`);
+  res.header(`Access-Control-Allow-Headers`, `Content-Type`);
+  next();
+};
+
+app.configure(() => {
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(allowCrossDomain);
+})
 
 app.listen(PORT);
 console.log("listening on ", PORT);
