@@ -42,7 +42,7 @@ const generalLimiter = rateLimit({
 	max: 100, // Each IP can send a max of 100 req in 15 min
 });
 
-// app.use(generalLimiter);
+app.use(generalLimiter);
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options
