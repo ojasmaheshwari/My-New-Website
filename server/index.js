@@ -36,17 +36,16 @@ const corsOptions = {
 	credentials: true,
 }
 
+app.use(cors(corsOptions));
 
 // const generalLimiter = rateLimit({
 // 	windowMs: 15 * 60 * 1000, // 15 minutes
 // 	max: 100, // Each IP can send a max of 100 req in 15 min
 // });
 
-app.enable('trust proxy');
 
 //app.use(generalLimiter);
 
-app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options
 app.use(bodyParser.json());
 app.use(cookieParser());
