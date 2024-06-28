@@ -52,6 +52,10 @@ app.use(cookieParser());
 app.listen(PORT);
 console.log("listening on ", PORT);
 
+app.get('/', (req, res) => {
+	res.json("hello world");
+});
+
 app.use('/blog', blogRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
