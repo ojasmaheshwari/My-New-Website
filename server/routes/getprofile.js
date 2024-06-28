@@ -37,6 +37,7 @@ const authenticateJWT = (req, res, next) => {
 };
 
 router.get("/", authenticateJWT, async (req, res) => {
+	console.log("hit at getprofile");
   if (req.user_id) {
     const user = await User.findById(req.user_id);
     if (!user) {
