@@ -30,18 +30,8 @@ const MONGODB_CONNECT_STR = process.env.MONGODB_CONNECT_STR;
 
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL, process.env.CLIENT_SEC_URL]
-
-console.log("allowed origins", allowedOrigins);
-
 const corsOptions = {
-	origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+	origin: process.env.CLIENT_URL,
 	credentials: true,
 }
 
@@ -52,7 +42,7 @@ const generalLimiter = rateLimit({
 	max: 100, // Each IP can send a max of 100 req in 15 min
 });
 
-app.use(generalLimiter);
+// app.use(generalLimiter);
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options
