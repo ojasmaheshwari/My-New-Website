@@ -65,6 +65,10 @@ const SignUp = () => {
           password: password,
         };
         submitToAPI(formData);
+				passwordElem.value = "";
+				confirmPasswordElem.value = "";
+				document.querySelector('#email').value = "";
+				document.querySelector('#username').value = "";
       }
     } else {
       e.target.reportValidity();

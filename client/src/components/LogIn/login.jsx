@@ -59,6 +59,8 @@ const Login = () => {
 				password,
 			}
 			submitToAPI(formData);
+			document.querySelector('#username').value = "";
+			document.querySelector('#password').value = "";
 		}
 		else {
 			e.target.reportValidity();

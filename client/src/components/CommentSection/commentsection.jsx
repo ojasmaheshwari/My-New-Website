@@ -9,7 +9,6 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Comment = (props) => {
 	const commentData = props.commentData;
-	console.log("comment data from <Comment> ", commentData);
   return (
     <div className="comment">
       <div className="comment-metadata">

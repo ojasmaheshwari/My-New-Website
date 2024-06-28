@@ -43,7 +43,6 @@ const Blog = () => {
         setBlogId(response._id);
         setBlogHeading(response.heading);
         setBlogDescription(response.description);
-        setBlogProfilePicUrl(response.profilePicture);
         setBlogUsername(response.username);
         setBlogSpecialisation(response.speciality);
         setBlogReadTime(response.timeReqToRead);
@@ -52,8 +51,12 @@ const Blog = () => {
         setBlogComments(response.comments);
         setBlogContent(marked(response.blogMarkdownContent));
         setBlogExist(true);
+
+				const userResponse = await axios.get(`${SERVER_URL}/profile/${response.username}`);
+				setBlogProfilePicUrl(userResponse.data.profile.profilePicUrl);
       } catch (error) {
-        const errorCode = error.response.status;
+        const errorCode = error.response?.status;
+				console.log(error);
         if (errorCode == 404) {
           setBlogHeading("Blog doesn't exist");
           setBlogDescription(

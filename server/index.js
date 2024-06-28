@@ -25,8 +25,8 @@ const getBlogsInDescOrderRouter = require('./routes/getblogsindescorder');
 
 const MONGODB_SERVER = process.env.MONGODB_SERVER;
 const DB_NAME = process.env.DB_NAME;
-const HOST = "http://localhost";
 const PORT = process.env.PORT || 8000;
+const MONGODB_CONNECT_STR = process.env.MONGODB_CONNECT_STR;
 
 const app = express();
 
@@ -75,6 +75,6 @@ app.use('/getblogsindescorder', getBlogsInDescOrderRouter);
 // Serve files statically from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-mongoose.connect(MONGODB_SERVER + DB_NAME)
+mongoose.connect(MONGODB_CONNECT_STR)
     .then(() => console.log("MongoDB connected!"))
     .catch(err => console.log("MongoDB Error", err))
