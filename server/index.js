@@ -32,7 +32,7 @@ const app = express();
 
 const corsOptions = {
 	origin: [process.env.CLIENT_URL],
-	methods: ["POST", "GET", "PUT"],
+	methods: ["POST", "GET", "PUT", "OPTIONS"],
 	credentials: true,
 }
 
