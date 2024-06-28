@@ -47,8 +47,8 @@ app.use(cors(corsOptions));
 //app.use(generalLimiter);
 
 app.options('*', cors(corsOptions));    // Pre-flight options
-app.use(bodyParser.json());
-app.use(cookieParser());
+// app.use(bodyParser.json());
+// app.use(cookieParser());
 
 app.listen(PORT);
 console.log("listening on ", PORT);
