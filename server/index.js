@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
@@ -37,14 +37,14 @@ const corsOptions = {
 }
 
 
-const generalLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Each IP can send a max of 100 req in 15 min
-});
+// const generalLimiter = rateLimit({
+// 	windowMs: 15 * 60 * 1000, // 15 minutes
+// 	max: 100, // Each IP can send a max of 100 req in 15 min
+// });
 
 app.enable('trust proxy');
 
-app.use(generalLimiter);
+//app.use(generalLimiter);
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));    // Pre-flight options

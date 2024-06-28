@@ -6,21 +6,21 @@ const authenticateJWT = require("./getprofile").authenticateJWT;
 const multer = require("multer");
 const path = require("path");
 const User = require("../models/User");
-const rateLimit = require("express-rate-limit");
+//const rateLimit = require("express-rate-limit");
 
 const SERVER_URL = process.env.SERVER;
 
-const setUploadLimit = rateLimit({
-  windowMs: 60 * 1000, // 1 min
-  max: 3,
-  keyGenerator: (req) => req.user_id,
-	handler: (req, res, next, options) => {
-		res.status(options.statusCode).send(options.message);
-	},
-  message: {
-    message: "You are uploading too fast, please try again after a minute",
-  },
-});
+// const setUploadLimit = rateLimit({
+//   windowMs: 60 * 1000, // 1 min
+//   max: 3,
+//   keyGenerator: (req) => req.user_id,
+// 	handler: (req, res, next, options) => {
+// 		res.status(options.statusCode).send(options.message);
+// 	},
+//   message: {
+//     message: "You are uploading too fast, please try again after a minute",
+//   },
+// });
 
 const storage = multer.diskStorage({
   destination: "./uploads",
@@ -46,7 +46,7 @@ const upload = multer({
 
 router.use(authenticateJWT);
 
-router.post("/", setUploadLimit, upload.single("image"), async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   if (req.file) {
     const filename = req.file.filename;
     const profilePicUrl = SERVER_URL + "/uploads/" + filename;
