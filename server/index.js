@@ -32,6 +32,8 @@ const app = express();
 
 const allowedOrigins = [process.env.CLIENT_URL, process.env.CLIENT_SEC_URL]
 
+console.log("allowed origins", allowedOrigins);
+
 const corsOptions = {
 	origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
@@ -42,6 +44,8 @@ const corsOptions = {
   },
 	credentials: true,
 }
+
+console.log("cors options", corsOptions);
 
 const generalLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
