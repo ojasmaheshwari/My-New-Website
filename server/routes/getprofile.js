@@ -12,7 +12,7 @@ const authenticateJWT = (req, res, next) => {
   const token = req.cookies?.jwt;
 
   if (!token) {
-    return res.status(404).json({
+    return res.json({
       profileFound: false,
     });
   }
