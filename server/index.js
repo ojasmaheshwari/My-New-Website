@@ -35,7 +35,6 @@ const corsOptions = {
 	credentials: true,
 }
 
-console.log("cors options", corsOptions);
 
 const generalLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
@@ -44,8 +43,8 @@ const generalLimiter = rateLimit({
 
 // app.use(generalLimiter);
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));    // Pre-flight options
+app.use(cors());
+app.options('*', cors());    // Pre-flight options
 app.use(bodyParser.json());
 app.use(cookieParser());
 
