@@ -43,12 +43,13 @@ const generalLimiter = rateLimit({
 
 // app.use(generalLimiter);
 
-app.use(cors());
-app.options('*', cors());    // Pre-flight options
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));    // Pre-flight options
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.listen(PORT);
+console.log("listening on ", PORT);
 
 app.use('/blog', blogRouter);
 app.use('/signup', signupRouter);
