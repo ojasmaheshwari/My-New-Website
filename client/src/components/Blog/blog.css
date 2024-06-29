@@ -3,7 +3,6 @@
     height: calc(100svh - 4rem);
     margin: auto;
     padding: 2rem 0 0 0;
-    text-align: justify;
 }
 
 .blog-heading {
@@ -83,6 +82,10 @@
     display: block;
     margin: 4rem 0 0 0;
     padding-bottom: 4rem;
+}
+
+.blog-content img {
+	max-width: 100%;
 }
 
 @media only screen and (max-width: 600px) {

@@ -5,8 +5,9 @@ router.get('/', (req, res) => {
 	res.cookie('jwt', '', {
 		httpOnly: true,
 		secure: process.env.NODE_ENV === "production",
-		sameSite: 'Strict',
+		sameSite: 'None',
 		expires: new Date(0),
+		partitioned: true,
 	});
 	res.json({message: "Logged out successfully"});
 });
