@@ -32,9 +32,9 @@ const FileUploadPrompt = ({isPromptOpen, setIsPromptOpen, setRequestedProfile}) 
         },
 				withCredentials: true,
       });
-			console.log("File uploaded successfully", response.data.file.filename);
-			const filename = response.data.file.filename;
-			const profilePicUrl = `${SERVER_URL}/uploads/${filename}`;
+			console.log("File uploaded successfully", response.data.file);
+			const filename = response.data.file;
+			const profilePicUrl = filename;
       setRequestedProfile({
         ...profile,
         profilePicUrl,

@@ -12,7 +12,6 @@ const blogSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
   },
   speciality: {
     type: String,
