@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
 		secure: process.env.NODE_ENV === "production",
 		sameSite: 'None',
 		expiresIn: "1d",
+		partitioned: true,
 	});
 	console.log(process.env.NODE_ENV === "production");
 	console.log(process.env.NODE_ENV);
