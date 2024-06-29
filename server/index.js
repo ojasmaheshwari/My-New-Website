@@ -56,11 +56,9 @@ const allowCrossDomain = (req, res, next) => {
   next();
 };
 
-app.configure(() => {
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(allowCrossDomain);
-})
 
 app.listen(PORT);
 console.log("listening on ", PORT);
