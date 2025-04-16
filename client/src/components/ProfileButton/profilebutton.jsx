@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import "./profilebutton.css";
 import { ProfileContext } from "../../services/ProfileContext";
 import axios from "axios";
 import PopUp from "../PopUp/popup";
@@ -44,7 +43,7 @@ const ProfileButton = () => {
   const toggleDropdown = () => setIsDropdownShown(!isDropdownShown);
 
   return (
-    <div className="profile-container">
+    <div className="profile-container mx-2 relative">
       <PopUp />
       <div className="profile-btn">
         {profile?.username ? (
@@ -57,9 +56,15 @@ const ProfileButton = () => {
                 : "2px solid transparent",
             }}
             onClick={toggleDropdown}
+            className="w-12 h-12 rounded-[50%]"
           />
         ) : (
-          <Link className="profile-login-btn" to="/login">Log In</Link>
+          <Link
+            className="profile-login-btn text-black py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black transition-all duration-400"
+            to="/login"
+          >
+            Log In
+          </Link>
         )}
       </div>
       <div
@@ -68,20 +73,32 @@ const ProfileButton = () => {
           display: isDropdownShown ? "flex" : "none",
         }}
       >
-        <ul>
-          <Link to={`/profile/${profile?.username}`} onClick={toggleDropdown}>
+        <ul className="absolute rounded-md right-2 shadow-md min-w-24 min-h-32 flex flex-col items-center justify-evenly">
+          <Link
+            to={`/profile/${profile?.username}`}
+            onClick={toggleDropdown}
+            className="w-full h-full hover:bg-gray-200 p-2 transition-all duration-200"
+          >
             <li className="profile-username">
               {profile?.username ? `@${profile?.username}` : "login"}
             </li>
           </Link>
-          <Link to={`/blogsby/${profile?.username}`} onClick={toggleDropdown}>
+          <Link
+            to={`/blogsby/${profile?.username}`}
+            onClick={toggleDropdown}
+            className="w-full h-full hover:bg-gray-200 p-2 transition-all duration-200"
+          >
             <li>Your blogs</li>
           </Link>
-          <a href="#" onClick={toggleDropdown}>
+          <Link
+            to="/"
+            onClick={toggleDropdown}
+            className="w-full h-full hover:bg-gray-200 p-2 transition-all duration-200"
+          >
             <li className="profile-logout" onClick={logout}>
               Log out
             </li>
-          </a>
+          </Link>
         </ul>
       </div>
     </div>
