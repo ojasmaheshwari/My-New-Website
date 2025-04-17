@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ProfileContext } from "../../services/ProfileContext";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import "./profileview.css";
 import PopUp from "../PopUp/popup";
 import { PopUpContext } from "../PopUp/popupcontext";
 import DOMPurify from "dompurify";
@@ -37,7 +36,7 @@ const ProfileView = () => {
     }
     try {
       const response = await axios.get(
-        `${SERVER_URL}/profile/${requiredUsername}`,
+        `${SERVER_URL}/profile/${requiredUsername}`
       );
       console.log(response.data);
       setRequestedProfile(response.data.profile);
@@ -91,7 +90,7 @@ const ProfileView = () => {
       },
       {
         withCredentials: true,
-      },
+      }
     );
 
     if (response.status === 200) {
@@ -110,30 +109,33 @@ const ProfileView = () => {
   }, []);
 
   return (
-    <div className="profileview-centralizer">
+    <div className="profileview-centralizer w-[90%] my-32 mx-auto flex flex-col justify-center items-center">
       <FileUploadPrompt
         isPromptOpen={isPromptOpen}
         setIsPromptOpen={setIsPromptOpen}
         setRequestedProfile={setRequestedProfile}
       />
-      <div className="profileview-main">
+      <div className="profileview-main flex flex-col shadow-md p-8">
         <PopUp />
-        <div className="profileview-left">
+        <div className="profileview-left flex flex-col items-center">
           <div
-            className={`profileview-profilepic ${isProfileEditable() ? "imageEditable" : ""}`}
+            className={`profileview-profilepic ${
+              isProfileEditable() ? "imageEditable" : ""
+            }`}
           >
             <img
               src={requestedProfile?.profilePicUrl}
               alt="profile pic"
               onClick={isProfileEditable() ? changeProfilePic : ""}
+              className="w-24 h-24 rounded-[50%]"
             />
-            <div className="profileview-img-overlay">CHANGE</div>
+            {/* <div className="profileview-img-overlay">CHANGE</div> */}
           </div>
           <div className="profileview-left-bottom">
             <span>@{requestedProfile?.username}</span>
           </div>
         </div>
-        <div className="profileview-right">
+        <div className="profileview-right my-4">
           <div className="profileview-right-up">
             <div className="profileview-user-heading">
               <span id="profileview-username" spellCheck="false">
@@ -161,9 +163,19 @@ const ProfileView = () => {
               />
             </div>
           </div>
-          <div className="profileview-right-bottom">
-            <button className="profileview-follow-btn">Follow</button>
-            <button className="profileview-submit-btn" onClick={submit}>
+          <div className="profileview-right-bottom my-4 flex gap-4 justify-center items-center">
+            <button
+              className={`profileview-follow-btn bg-white text-black border-1 border-black rounded-md p-2 hover:bg-black hover:text-white transition-all duration-400
+              ${isProfileEditable() ? "hidden" : "flex"}`}
+            >
+              Follow
+            </button>
+            <button
+              className={`profileview-submit-btn ${
+                isProfileEditable() ? "flex" : "hidden"
+              } bg-white text-black border-1 border-black rounded-md p-2 hover:bg-black hover:text-white transition-all duration-400"`}
+              onClick={submit}
+            >
               Submit
             </button>
           </div>
