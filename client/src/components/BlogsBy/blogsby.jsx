@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./blogsby.css";
 import BlogsCollection from "../BlogsCollection/blogscollection";
 import { PopUpContext } from "../PopUp/popupcontext";
 import { ProfileContext } from "../../services/ProfileContext";
@@ -13,7 +12,7 @@ const BlogsBy = () => {
     useContext(PopUpContext);
   const [profile, setProfile] = useContext(ProfileContext);
   const [blogs, setBlogs] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +28,7 @@ const BlogsBy = () => {
               },
               {
                 withCredentials: true,
-              },
+              }
             )
             .catch((error) => {
               setPopUpData({
@@ -42,15 +41,15 @@ const BlogsBy = () => {
             });
 
           const _blogs = response.data;
-					const blogs = _blogs.map(blog => {
-						return {
-							...blog,
-							address: `/blogs/${blog._id}`,
-						}
-					});
-					console.log(blogs);
+          const blogs = _blogs.map((blog) => {
+            return {
+              ...blog,
+              address: `/blogs/${blog._id}`,
+            };
+          });
+          console.log(blogs);
           setBlogs(blogs);
-					setIsLoading(false);
+          setIsLoading(false);
         } catch (error) {
           setPopUpData({
             heading: "ERROR",
@@ -61,16 +60,16 @@ const BlogsBy = () => {
           setIsPopUpShown(true);
         }
       };
-			await getAllBlogs();
+      await getAllBlogs();
     };
-		fetchData();
+    fetchData();
   }, []);
 
-	if (isLoading) {
-		return null;
-	}
+  if (isLoading) {
+    return null;
+  }
 
-	console.log(blogs);
+  console.log(blogs);
 
   return (
     <BlogsCollection

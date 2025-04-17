@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex flex-row justify-between items-center h-24 px-2">
+      <nav className="flex flex-row justify-between items-center h-24 px-2 lg:px-32">
         <span className="text-2xl font-extrabold">EPIC</span>
         <ul className="hidden md:flex md:flex-row items-center justify-center gap-8 h-full">
           <Link

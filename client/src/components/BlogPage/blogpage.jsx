@@ -30,11 +30,11 @@ const BlogPage = () => {
   }, []);
   return (
     <>
-      <main className="blogscollection-main">
-        <h1>Blog articles</h1>
-        <span>Most popular blogs</span>
+      <main className="blogscollection-main flex flex-col justify-center items-center">
+        <h1 className="text-2xl">Blog articles</h1>
+        <span className="text-lg">Most popular blogs</span>
         <div
-          className="blogcards"
+          className="blogcards flex justify-center items-center w-full flex-wrap gap-8 my-12"
           style={{
             display: "flex",
             flexWrap: "wrap",
