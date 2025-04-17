@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex flex-row justify-between items-center h-24 px-2 lg:px-32">
+      <nav className="flex flex-row justify-between items-center h-24 w-[90%] mx-auto">
         <span className="text-2xl font-extrabold">EPIC</span>
         <ul className="hidden md:flex md:flex-row items-center justify-center gap-8 h-full">
           <Link
@@ -76,7 +76,7 @@ const Navbar = () => {
             <li>Sign-Up</li>
           </Link>
         </ul>
-        <div className="w-full flex justify-center items-center my-2">
+        <div className="w-full flex justify-center items-center my-4">
           <input
             type="text"
             name="search"

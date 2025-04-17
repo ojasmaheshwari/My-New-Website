@@ -8,7 +8,6 @@ import { PopUpContext } from "../PopUp/popupcontext";
 import { marked } from "marked";
 import axios from "axios";
 
-import "./blog.css";
 import CommentSection from "../CommentSection/commentsection";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -52,15 +51,17 @@ const Blog = () => {
         setBlogContent(marked(response.blogMarkdownContent));
         setBlogExist(true);
 
-				const userResponse = await axios.get(`${SERVER_URL}/profile/${response.username}`);
-				setBlogProfilePicUrl(userResponse.data.profile.profilePicUrl);
+        const userResponse = await axios.get(
+          `${SERVER_URL}/profile/${response.username}`
+        );
+        setBlogProfilePicUrl(userResponse.data.profile.profilePicUrl);
       } catch (error) {
         const errorCode = error.response?.status;
-				console.log(error);
+        console.log(error);
         if (errorCode == 404) {
           setBlogHeading("Blog doesn't exist");
           setBlogDescription(
-            "The blog you are trying to find may have been deleted or never existed.",
+            "The blog you are trying to find may have been deleted or never existed."
           );
         }
       }
@@ -79,7 +80,7 @@ const Blog = () => {
           },
           {
             withCredentials: true,
-          },
+          }
         )
         .then((response) => {
           setBlogLikes(response?.data?.likes);
@@ -92,7 +93,7 @@ const Blog = () => {
               "Some error occured, please try again after some time or contact @ojas if error persists",
           });
           setIsPopUpShown(true);
-					console.log("frome rror", error?.response?.data);
+          console.log("frome rror", error?.response?.data);
           setBlogLikes(error?.response?.data?.likes);
         });
     } catch (error) {
@@ -107,16 +108,16 @@ const Blog = () => {
     }
   };
 
-	if (!blogId) {
-		return null;
-	}
+  if (!blogId) {
+    return null;
+  }
 
   return (
-    <main className="blog-main">
-      <h1 className="blog-heading">{blogHeading}</h1>
-      <h2 className="blog-about">{blogDescription}</h2>
+    <main className="blog-main w-[90%] mx-auto flex flex-col">
+      <h1 className="blog-heading text-2xl">{blogHeading}</h1>
+      <h2 className="blog-about text-lg">{blogDescription}</h2>
       <div
-        className="blog-from"
+        className="blog-from py-2 flex items-center gap-4 my-4"
         style={{
           display: blogExist ? "flex" : "none",
         }}
@@ -124,12 +125,14 @@ const Blog = () => {
         <img
           src={blogProfilePicUrl}
           alt="profile pic"
-          className="blog-profile-pic"
+          className="blog-profile-pic w-12 h-12 rounded-[50%]"
         />
         <div className="blog-labels-wrapper">
           <div className="blog-label-1">
             <span>
-              <Link to={`/profile/${blogUsername}`}>{blogUsername}</Link>
+              <Link to={`/profile/${blogUsername}`} className="hover:underline">
+                {blogUsername}
+              </Link>
             </span>
           </div>
           <div className="blog-label-2">
@@ -140,22 +143,22 @@ const Blog = () => {
         </div>
       </div>
       <div
-        className="blog-actions"
+        className="blog-actions flex flex-row w-full border-1 border-black p-2 rounded-sm mb-8"
         style={{
           display: blogExist ? "flex" : "none",
         }}
       >
-        <div className="blog-actions-1">
-          <div className="blog-likes-icon">
+        <div className="blog-actions-1 flex w-full gap-4">
+          <div className="blog-likes-icon flex items-center gap-1">
             <PiHandsClapping onClick={likeBlog} />
-            <span>{blogLikes}</span>
+            <span className="text-sm">{blogLikes}</span>
           </div>
-          <div className="blog-comments-icon">
+          <div className="blog-comments-icon flex items-center gap-1">
             <FaRegComment />
-            <span>{blogComments}</span>
+            <span className="text-sm">{blogComments}</span>
           </div>
         </div>
-        <div className="blog-actions-2">
+        <div className="blog-actions-2 flex gap-1">
           <CiBookmarkPlus />
           <CiShare1 />
         </div>
@@ -164,7 +167,7 @@ const Blog = () => {
         className="blog-content"
         dangerouslySetInnerHTML={{ __html: blogContent }}
       ></div>
-		<CommentSection blogId={blogId}/>
+      <CommentSection blogId={blogId} />
     </main>
   );
 };

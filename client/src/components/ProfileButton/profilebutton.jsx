@@ -68,12 +68,12 @@ const ProfileButton = () => {
         )}
       </div>
       <div
-        className="profile-dropdown"
+        className="profile-dropdown bg-white z-100"
         style={{
           display: isDropdownShown ? "flex" : "none",
         }}
       >
-        <ul className="absolute rounded-md right-2 shadow-md min-w-24 min-h-32 flex flex-col items-center justify-evenly">
+        <ul className="absolute rounded-md right-2 shadow-md min-w-24 min-h-32 flex flex-col items-center justify-evenly bg-white">
           <Link
             to={`/profile/${profile?.username}`}
             onClick={toggleDropdown}

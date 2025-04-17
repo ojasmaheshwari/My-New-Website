@@ -22,7 +22,7 @@ const PopUp = () => {
   }
 
   return (
-    <div className="popup-container border-2 border-black p-2 min-w-64 fixed bottom-4 right-2 rounded-md px-4">
+    <div className="popup-container border-2 border-black p-2 min-w-64 fixed bottom-4 right-2 rounded-md px-4 z-100 bg-white shadow-md">
       <div className="popup-tab w-full flex items-center justify-end">
         <RxCross2 className="popup-cross-icon" onClick={togglePopUp} />
       </div>
