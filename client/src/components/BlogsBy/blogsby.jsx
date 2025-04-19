@@ -1,11 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import BlogsCollection from "../BlogsCollection/blogscollection";
+import React, { lazy, Suspense, useContext, useEffect, useState } from "react";
 import { PopUpContext } from "../PopUp/popupcontext";
 import { ProfileContext } from "../../services/ProfileContext";
 import fetchProfile from "../../services/fetchprofile";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+const BlogsCollection = lazy(() =>
+  import("../BlogsCollection/blogscollection")
+);
 
 const BlogsBy = () => {
   const [popUpData, setPopUpData, isPopUpShown, setIsPopUpShown] =
@@ -72,13 +76,15 @@ const BlogsBy = () => {
   console.log(blogs);
 
   return (
-    <BlogsCollection
-      collectionData={{
-        heading: "Your blog articles",
-        description: "These are all the blogs you have written in the past",
-      }}
-      blogs={blogs}
-    />
+    <Suspense fallback={<Loader />}>
+      <BlogsCollection
+        collectionData={{
+          heading: "Your blog articles",
+          description: "These are all the blogs you have written in the past",
+        }}
+        blogs={blogs}
+      />
+    </Suspense>
   );
 };
 
