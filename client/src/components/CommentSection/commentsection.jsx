@@ -2,32 +2,41 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { PopUpContext } from "../PopUp/popupcontext";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Suspense } from "react";
 import { use } from "marked";
+import Loader from "../Loader/Loader";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Comment = (props) => {
   const commentData = props.commentData;
   return (
-    <div className="comment flex flex-col border-1 border-t-transparent border-b-black border-r-transparent border-l-transparent py-2">
-      <div className="comment-metadata flex gap-4 items-center my-1">
-        <img
-          src={commentData.profilePicUrl}
-          alt="User profile pic"
-          className="w-8 h-8 rounded-[50%]"
-        />
-        <Link
-          to={`/profile/${commentData.username}`}
-          className="hover:underline text-md"
-        >
-          {commentData.username}
-        </Link>
-        <span className="text-sm font-thin">{commentData.timePosted}</span>
-      </div>
-      <div className="comment-content">
-        {commentData.content || "Some error occured while loading this comment"}
-      </div>
-    </div>
+    <>
+      {commentData ? (
+        <div className="comment flex flex-col border-1 border-t-transparent border-b-black border-r-transparent border-l-transparent py-2">
+          <div className="comment-metadata flex gap-4 items-center my-1">
+            <img
+              src={commentData.profilePicUrl}
+              alt="User profile pic"
+              className="w-8 h-8 rounded-[50%]"
+            />
+            <Link
+              to={`/profile/${commentData.username}`}
+              className="hover:underline text-md"
+            >
+              {commentData.username}
+            </Link>
+            <span className="text-sm font-thin">{commentData.timePosted}</span>
+          </div>
+          <div className="comment-content">
+            {commentData.content ||
+              "Some error occured while loading this comment"}
+          </div>
+        </div>
+      ) : (
+        <div className="w-80 h-32 bg-slate-300 animate-pulse rounded-md"></div>
+      )}
+    </>
   );
 };
 
@@ -114,32 +123,31 @@ const CommentSection = (props) => {
     }
   };
 
-  if (!blogId) {
-    return null;
-  }
   return (
-    <div className="commentsection my-8">
-      <h1 className="text-2xl">Comments</h1>
-      <form className="commentsection-write mb-4" onSubmit={postComment}>
-        <textarea
-          id="commentsection-comment-input"
-          placeholder="Share your thoughts"
-          ref={commentInput}
-          className="w-full h-18 border-1 border-black rounded-sm my-1 p-2"
-        />
-        <button
-          type="submit"
-          className="bg-white text-black border-1 hover:bg-black hover:text-white py-2 px-4 rounded-md transition-all duration-400"
-        >
-          Submit
-        </button>
-      </form>
-      <div className="comments-wrapper flex flex-col justify-center gap-4">
-        {comments.map((comment, index) => (
-          <Comment commentData={comment} key={index} />
-        ))}
+    <Suspense fallback={<Loader />}>
+      <div className="commentsection my-8">
+        <h1 className="text-2xl">Comments</h1>
+        <form className="commentsection-write mb-4" onSubmit={postComment}>
+          <textarea
+            id="commentsection-comment-input"
+            placeholder="Share your thoughts"
+            ref={commentInput}
+            className="w-full h-18 border-1 border-black rounded-sm my-1 p-2"
+          />
+          <button
+            type="submit"
+            className="bg-white text-black border-1 hover:bg-black hover:text-white py-2 px-4 rounded-md transition-all duration-400"
+          >
+            Submit
+          </button>
+        </form>
+        <div className="comments-wrapper flex flex-col justify-center gap-4">
+          {comments.map((comment, index) => (
+            <Comment commentData={comment} key={index} />
+          ))}
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 

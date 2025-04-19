@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, lazy } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { PiHandsClapping } from "react-icons/pi";
@@ -8,7 +8,7 @@ import { PopUpContext } from "../PopUp/popupcontext";
 import { marked } from "marked";
 import axios from "axios";
 
-import CommentSection from "../CommentSection/commentsection";
+const CommentSection = lazy(() => import("../CommentSection/commentsection"));
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
