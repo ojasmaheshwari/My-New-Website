@@ -178,7 +178,7 @@ const Blog = () => {
           <CommentSection blogId={blogId} />
         </main>
       ) : (
-        <div className="w-[90%] h-full mx-auto">
+        <div className="w-[90%] h-screen mx-auto">
           <Loader />
         </div>
       )}
