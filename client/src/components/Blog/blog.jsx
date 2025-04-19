@@ -7,6 +7,7 @@ import { CiBookmarkPlus, CiShare1 } from "react-icons/ci";
 import { PopUpContext } from "../PopUp/popupcontext";
 import { marked } from "marked";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const CommentSection = lazy(() => import("../CommentSection/commentsection"));
 
@@ -113,62 +114,75 @@ const Blog = () => {
   }
 
   return (
-    <main className="blog-main w-[90%] mx-auto flex flex-col">
-      <h1 className="blog-heading text-2xl">{blogHeading}</h1>
-      <h2 className="blog-about text-lg">{blogDescription}</h2>
-      <div
-        className="blog-from py-2 flex items-center gap-4 my-4"
-        style={{
-          display: blogExist ? "flex" : "none",
-        }}
-      >
-        <img
-          src={blogProfilePicUrl}
-          alt="profile pic"
-          className="blog-profile-pic w-12 h-12 rounded-[50%]"
-        />
-        <div className="blog-labels-wrapper">
-          <div className="blog-label-1">
-            <span>
-              <Link to={`/profile/${blogUsername}`} className="hover:underline">
-                {blogUsername}
-              </Link>
-            </span>
+    <>
+      {blogExist ? (
+        <main className="blog-main w-[90%] mx-auto flex flex-col">
+          <h1 className="blog-heading text-2xl">{blogHeading}</h1>
+          <h2 className="blog-about text-lg">{blogDescription}</h2>
+          <div
+            className="blog-from py-2 flex items-center gap-4 my-4"
+            style={{
+              display: blogExist ? "flex" : "none",
+            }}
+          >
+            <img
+              src={blogProfilePicUrl}
+              alt="profile pic"
+              className="blog-profile-pic w-12 h-12 rounded-[50%]"
+            />
+            <div className="blog-labels-wrapper">
+              <div className="blog-label-1">
+                <span>
+                  <Link
+                    to={`/profile/${blogUsername}`}
+                    className="hover:underline"
+                  >
+                    {blogUsername}
+                  </Link>
+                </span>
+              </div>
+              <div className="blog-label-2">
+                Published in{" "}
+                <span className="blog-specialisation">
+                  {blogSpecialisation}
+                </span>{" "}
+                . {blogReadTime} read . {blogDate}
+              </div>
+            </div>
           </div>
-          <div className="blog-label-2">
-            Published in{" "}
-            <span className="blog-specialisation">{blogSpecialisation}</span> .{" "}
-            {blogReadTime} read . {blogDate}
+          <div
+            className="blog-actions flex flex-row w-full border-1 border-black p-2 rounded-sm mb-8"
+            style={{
+              display: blogExist ? "flex" : "none",
+            }}
+          >
+            <div className="blog-actions-1 flex w-full gap-4">
+              <div className="blog-likes-icon flex items-center gap-1">
+                <PiHandsClapping onClick={likeBlog} />
+                <span className="text-sm">{blogLikes}</span>
+              </div>
+              <div className="blog-comments-icon flex items-center gap-1">
+                <FaRegComment />
+                <span className="text-sm">{blogComments}</span>
+              </div>
+            </div>
+            <div className="blog-actions-2 flex gap-1">
+              <CiBookmarkPlus />
+              <CiShare1 />
+            </div>
           </div>
+          <div
+            className="blog-content"
+            dangerouslySetInnerHTML={{ __html: blogContent }}
+          ></div>
+          <CommentSection blogId={blogId} />
+        </main>
+      ) : (
+        <div className="w-[90%] h-full mx-auto">
+          <Loader />
         </div>
-      </div>
-      <div
-        className="blog-actions flex flex-row w-full border-1 border-black p-2 rounded-sm mb-8"
-        style={{
-          display: blogExist ? "flex" : "none",
-        }}
-      >
-        <div className="blog-actions-1 flex w-full gap-4">
-          <div className="blog-likes-icon flex items-center gap-1">
-            <PiHandsClapping onClick={likeBlog} />
-            <span className="text-sm">{blogLikes}</span>
-          </div>
-          <div className="blog-comments-icon flex items-center gap-1">
-            <FaRegComment />
-            <span className="text-sm">{blogComments}</span>
-          </div>
-        </div>
-        <div className="blog-actions-2 flex gap-1">
-          <CiBookmarkPlus />
-          <CiShare1 />
-        </div>
-      </div>
-      <div
-        className="blog-content"
-        dangerouslySetInnerHTML={{ __html: blogContent }}
-      ></div>
-      <CommentSection blogId={blogId} />
-    </main>
+      )}
+    </>
   );
 };
 
