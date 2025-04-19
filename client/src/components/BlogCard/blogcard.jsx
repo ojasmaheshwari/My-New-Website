@@ -1,8 +1,10 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
 
 const BlogCard = (props) => {
+  const [loading, setLoading] = useState(true);
+
   const content = props.content;
   const address = props.content.address;
 
@@ -13,16 +15,25 @@ const BlogCard = (props) => {
     navigate(`/blogs/${content._id}`);
   };
   return (
-    <Suspense fallback=<Loader />>
+    <>
       <div
-        className="blog-card w-80 flex flex-col justify-center hover:scale-110 transition-all duration-400 shadow-md p-2 rounded-md"
+        className={`w-80 h-64 rounded-md bg-slate-300 animate-pulse ${
+          loading ? "flex" : "hidden"
+        }
+          `}
+      ></div>
+      <div
+        className={`blog-card w-80 flex flex-col justify-center hover:scale-110 transition-all duration-400 shadow-md p-2 rounded-md ${
+          loading ? "hidden" : "flex"
+        }`}
         onClick={openBlog}
       >
         <div className="image h-64 w-[95%]">
           <img
             src={content.blogThumbnail}
             alt="Image for Blog"
-            className="w-full h-full rounded-md"
+            className={`w-full h-full rounded-md`}
+            onLoad={() => setLoading(false)}
           />
         </div>
         <div className="description my-2 min-h-32">
@@ -38,7 +49,7 @@ const BlogCard = (props) => {
           </span>
         </div>
       </div>
-    </Suspense>
+    </>
   );
 };
 
