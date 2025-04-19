@@ -5,7 +5,7 @@ const Loader = () => {
     <div className="w-full h-screen absolute left-0 top-0 flex items-center justify-center">
       <img
         className="w-18 h-18"
-        src="https://media.tenor.com/Zls7JMTdaaQAAAAd/loading-loading-gif.gif"
+        src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478808-4574104.gif"
         alt="Loading"
       />
     </div>
