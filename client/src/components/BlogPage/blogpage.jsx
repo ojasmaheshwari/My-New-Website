@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { PopUpContext } from "../PopUp/popupcontext";
 import BlogCard from "../BlogCard/blogcard";
 import axios from "axios";
+import { Suspense } from "react";
+import Loader from "../Loader/Loader";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -30,21 +32,23 @@ const BlogPage = () => {
   }, []);
   return (
     <>
-      <main className="blogscollection-main flex flex-col justify-center items-center">
-        <h1 className="text-2xl">Blog articles</h1>
-        <span className="text-lg">Most popular blogs</span>
-        <div
-          className="blogcards flex justify-center items-center w-full flex-wrap gap-8 my-12"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-          }}
-        >
-          {blogs.map((blog, index) => (
-            <BlogCard key={index} content={blog} />
-          ))}
-        </div>
-      </main>
+      <Suspense fallback=<Loader />>
+        <main className="blogscollection-main flex flex-col justify-center items-center">
+          <h1 className="text-2xl">Blog articles</h1>
+          <span className="text-lg">Most popular blogs</span>
+          <div
+            className="blogcards flex justify-center items-center w-full flex-wrap gap-8 my-12"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {blogs.map((blog, index) => (
+              <BlogCard key={index} content={blog} />
+            ))}
+          </div>
+        </main>
+      </Suspense>
     </>
   );
 };
