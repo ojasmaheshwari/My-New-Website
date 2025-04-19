@@ -43,9 +43,11 @@ const BlogPage = () => {
             flexWrap: "wrap",
           }}
         >
-          {blogs.map((blog, index) => (
-            <BlogCard key={index} content={blog} />
-          ))}
+          <Suspense fallback={<Loader />}>
+            {blogs.map((blog, index) => (
+              <BlogCard key={index} content={blog} />
+            ))}
+          </Suspense>
         </div>
       </main>
     </>
