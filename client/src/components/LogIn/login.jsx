@@ -73,22 +73,31 @@ const Login = () => {
   };
 
   return (
-    <main className="signup-main">
+    <main className="signup-main flex items-center justify-center w-[90%] h-screen mx-auto">
       <PopUp />
-      <div className="container">
-        <div className="signup-header">
-          <h1>Log In</h1>
+      <div className="container w-fit h-fit flex flex-col justify-center items-center gap-2 -translate-y-[25%] p-12 shadow-md rounded-md">
+        <div className="signup-header my-4">
+          <h1 className="text-2xl">Log In</h1>
           <span>
-            Not yet registered? <Link to="/signup">Sign Up</Link>
+            Not yet registered?{" "}
+            <Link to="/signup" className="hover:underline">
+              Sign Up
+            </Link>
           </span>
         </div>
-        <form method="post" action="signup" onSubmit={submitForm}>
+        <form
+          method="post"
+          action="signup"
+          onSubmit={submitForm}
+          className="flex justify-center items-center flex-col gap-2"
+        >
           <input
             type="text"
             name="username"
             id="username"
             placeholder="Username"
             required
+            className="border-1 border-t-transparent border-l-transparent border-r-transparent border-b-black outline-none"
           />
           <input
             type="password"
@@ -96,19 +105,23 @@ const Login = () => {
             id="password"
             placeholder="Password"
             required
+            className="border-1 border-t-transparent border-l-transparent border-r-transparent border-b-black outline-none"
           />
-          <button type="submit" className="primary">
+          <button
+            type="submit"
+            className="primary primary bg-white text-black px-4 py-2 my-4 border-2 border-black rounded-md hover:bg-black hover:text-white transition-all duration-400"
+          >
             Log In
           </button>
         </form>
-        <div className="other-signup-options">
+        <div className="other-signup-options my-2 flex flex-col gap-2">
           <span className="signup-separator">Or continue with</span>
-          <div className="logos">
+          <div className="logos flex items-center justify-center gap-4">
             <a href="#">
-              <img src={facebookIcon} />
+              <img src={facebookIcon} className="w-8 h-8" />
             </a>
             <a href="#">
-              <img src={googleIcon} />
+              <img src={googleIcon} className="w-8 h-8" />
             </a>
           </div>
         </div>
