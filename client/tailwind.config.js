@@ -15,8 +15,17 @@ module.exports = {
             '100%': { backgroundPosition: '100% 50%' },
           },
         },
+        typography: {
+          DEFAULT: {
+            css: {
+              h1: "font-size: 80px;"
+            }
+          },
+        },
       },
     },
-    plugins: [],
+    plugins: [
+      require('@tailwindcss/typography'),
+    ],
   };
   

@@ -11,7 +11,7 @@ const Home = () => {
       setCurrentLangIdx((prevIdx) =>
         prevIdx < langsList.length - 1 ? prevIdx + 1 : 0
       );
-    }, 3000);
+    }, 2000);
     return () => {
       clearInterval(intervalId);
     };

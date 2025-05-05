@@ -8,6 +8,7 @@ import { PopUpContext } from "../PopUp/popupcontext";
 import { marked } from "marked";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import "./blog.css";
 
 const CommentSection = lazy(() => import("../CommentSection/commentsection"));
 
